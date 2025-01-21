@@ -1,5 +1,3 @@
-
-
 // ====== USER PARAMS
 declare type CreateUserParams = {
     clerkId: string;
@@ -18,6 +16,8 @@ declare type CreateUserParams = {
   };
   
   // ====== IMAGE PARAMS
+  declare type ImageConfig = Record<string, unknown>; // Use `Record` for generic objects instead of `any`
+  
   declare type AddImageParams = {
     image: {
       title: string;
@@ -25,12 +25,12 @@ declare type CreateUserParams = {
       transformationType: string;
       width: number;
       height: number;
-      config: any;
+      config: ImageConfig;
       secureURL: string;
       transformationURL: string;
-      aspectRatio: string | undefined;
-      prompt: string | undefined;
-      color: string | undefined;
+      aspectRatio?: string; // Optional fields can use `?` instead of `| undefined`
+      prompt?: string;
+      color?: string;
     };
     userId: string;
     path: string;
@@ -44,12 +44,12 @@ declare type CreateUserParams = {
       transformationType: string;
       width: number;
       height: number;
-      config: any;
+      config: ImageConfig;
       secureURL: string;
       transformationURL: string;
-      aspectRatio: string | undefined;
-      prompt: string | undefined;
-      color: string | undefined;
+      aspectRatio?: string;
+      prompt?: string;
+      color?: string;
     };
     userId: string;
     path: string;
@@ -115,7 +115,7 @@ declare type CreateUserParams = {
   
   declare type SearchParamProps = {
     params: { id: string; type: TransformationTypeKey };
-    searchParams: { [key: string]: string | string[] | undefined };
+    searchParams: Record<string, string | string[] | undefined>; // Use `Record` for key-value objects
   };
   
   declare type TransformationFormProps = {
@@ -128,7 +128,7 @@ declare type CreateUserParams = {
   };
   
   declare type TransformedImageProps = {
-    image: any;
+    image: IImage; // Use `IImage` or a proper interface for the image type
     type: string;
     title: string;
     transformationConfig: Transformations | null;
@@ -136,3 +136,4 @@ declare type CreateUserParams = {
     hasDownload?: boolean;
     setIsTransforming?: React.Dispatch<React.SetStateAction<boolean>>;
   };
+  
