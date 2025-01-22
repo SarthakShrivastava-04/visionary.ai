@@ -9,10 +9,14 @@ interface MongooseConnection {
 
 // Type for the global object to include mongoose
 declare global {
-  var mongoose: MongooseConnection | undefined;
+  namespace NodeJS {
+    interface Global {
+      mongoose: MongooseConnection | undefined;
+    }
+  }
 }
 
-let cached: MongooseConnection = global.mongoose || { conn: null, promise: null };
+const cached: MongooseConnection = (global as typeof global & { mongoose?: MongooseConnection }).mongoose || { conn: null, promise: null };
 
 export const connectToDatabase = async () => {
   if (cached.conn) return cached.conn;
